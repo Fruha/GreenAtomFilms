@@ -1,0 +1,88 @@
+{% extends "filmsai/wrapper.jinja2" %}
+{% load static %}
+{% block title %}Приветсвенная страница{% endblock title %}
+
+{% block body %}
+<div class="container">
+  <br>
+  <div class="film row">
+    <img class="col s12 m6" src="{{film.image.url}}" alt="film image">
+    <h2 class="col s12 m6">{{film.title}}</h2>
+  </div>
+  <hr>
+  
+  <a href="{% url 'add_comment' film.pk %}">Оставить комментарий к фильму</a>
+  <h4>Комментарии к фильму:</h4>
+  <ul class="comments">
+  {% for comment in object_list %}
+    <li class="card-panel">
+      <div class="user-info row">
+        <div class="username col s10 m9"><i>{{comment.username}}</i> пишет:</div>
+        <div class="datetime col s2 m3 grey-text text-lighten-1"><i>{{comment.datetime}}</i></div>
+      </div>
+      <blockquote class="comment p3">{{comment.comment}}</blockquote>
+      <div class="comment-info row">
+        <div class="rating col s10 m9"><span>Рейтинг: </span>
+        {% if comment.rating is None %}
+          Не определен
+        {% else %}
+          {{comment.rating}}
+          <i class="material-icons tiny amber-text text-accent-4">star</i>
+        {% endif %}
+        </div>
+        <div class="assesment col s2 m3">
+        {% if comment.assesment is None %}
+          <span>Не определен</span>
+        {% elif comment.assesment %}
+          <span class="green-text text-lighten-2">Положительный</span>
+        {% else %}
+          <span class="red-text text-lighten-2">Отрицательный</span>
+        {% endif %}
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+  </ul>
+
+<div class="container center-align">
+
+{% if is_paginated %}
+  <ul class="pagination">
+  {% if page_obj.has_previous %}
+    <li class="waves-effect">
+      <a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% endif %}
+  
+  {% for page in paginator.get_elided_page_range %}
+    {% if page is '...'%}
+      <li class="disabled">{{ page }}</li>
+    {% elif page is page_obj.number %}
+      <li class="active"><a href="?page={{page}}">{{ page }}</a></li>
+    {% else %}
+      <li class="waves-effect"><a href="?page={{page}}">{{ page }}</a></li>
+    {% endif%}
+  {% endfor%}
+
+      
+  {% if page_obj.has_next %}
+    <li class="waves-effect">
+      <a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% endif %}
+
+  </ul>
+
+{% endif %}
+</div>
+</div>
+
+{% endblock body %}

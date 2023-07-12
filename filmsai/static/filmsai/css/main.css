@@ -1,0 +1,14 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.image-title {
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}

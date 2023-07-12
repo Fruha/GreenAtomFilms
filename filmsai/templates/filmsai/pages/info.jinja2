@@ -1,0 +1,21 @@
+{% extends "filmsai/wrapper.jinja2" %}
+{% load static %}
+{% block title %}Приветсвенная страница{% endblock title %}
+
+{% block body %}
+  <div class="container center">
+    <h2 class="center-align">Привет, Империя!</h2>
+    <div>
+      <img class="card-panel" src="{% static 'filmsai/image/edvard.jpg' %}" alt="Создатель">
+      <h4 class="image-title">Немного о себе:</h4>
+    </div>
+    <hr>
+    <h5>Закончил <b>бакалавриат</b> МИФИ по направлению Информатика и вычислительная техника</h5>
+    <h5>Последние 4 года занимаюсь разработкой моделей <b>нейронных сетей</b></h5>
+    <h5>Активно участвую в <b>ХАКАТОНАХ и ДАТАТОНАХ</b></h5>
+    <h5>Прокачиваюсь на <b><i>Leetcode</i></b> и <b><i>Яндекс.Контест</i></b></h5>
+    <h5>Тренирую <b>выход</b> на две</h5>
+    <h5><b>Топ-5</b> четверка России</h5>
+    <h2>С радостью готов работать у Вас</h2>
+  </div>
+{% endblock body %}

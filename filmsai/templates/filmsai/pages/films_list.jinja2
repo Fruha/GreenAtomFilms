@@ -1,0 +1,68 @@
+{% extends "filmsai/wrapper.jinja2" %}
+{% load static %}
+{% block title %}Приветсвенная страница{% endblock title %}
+
+{% block body %}
+
+
+<ul>
+<div class="row">
+{% for film in object_list %}
+<div class="col s12 m3">
+<div class="card small">
+    <div class="card-image center-align">
+        <a href="{% url 'film_details' film.pk %}"><img src="{{ film.image.url }}" alt="film image"></a>
+    </div>
+    
+    <div class="card-content center-align">
+        <a href="{% url 'film_details' film.pk %}">{{ film.title }}</a>
+    </div>
+</div>
+</div>
+{% empty %}
+    <li>Пока наша галерея пуста</li>
+{% endfor %}
+</div>
+</ul>
+
+<div class="container center-align">
+
+{% if is_paginated %}
+  <ul class="pagination">
+  {% if page_obj.has_previous %}
+    <li class="waves-effect">
+      <a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% endif %}
+  
+  {% for page in paginator.get_elided_page_range %}
+    {% if page is '...'%}
+      <li class="disabled">{{ page }}</li>
+    {% elif page is page_obj.number %}
+      <li class="active"><a href="?page={{page}}">{{ page }}</a></li>
+    {% else %}
+      <li class="waves-effect"><a href="?page={{page}}">{{ page }}</a></li>
+    {% endif%}
+  {% endfor%}
+
+      
+  {% if page_obj.has_next %}
+    <li class="waves-effect">
+      <a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% endif %}
+
+  </ul>
+
+{% endif %}
+</div>
+
+{% endblock body %}
